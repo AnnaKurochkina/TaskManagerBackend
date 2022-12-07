@@ -3,6 +3,7 @@ package com.nology.taskmanager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -28,5 +29,18 @@ public class TaskListController {
     public ResponseEntity<TaskList> createTaskList(@RequestBody TaskList taskList) {
         taskListService.addTaskList(taskList);
         return ResponseEntity.status(HttpStatus.CREATED).body(taskList);
+    }
+
+    @DeleteMapping("/lists/{id}")
+    @Transactional
+    public ResponseEntity<Void> deleteTaskListById(@PathVariable long id) {
+        taskListService.deleteTaskListById(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PutMapping("/lists/{id}")
+    public ResponseEntity<TaskList> updateTaskList(@PathVariable long id, @RequestBody TaskList taskList) {
+        taskListService.updateTaskList(id, taskList);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }

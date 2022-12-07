@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaskListRepository extends JpaRepository<TaskList, Long> {
 
-    @Query("SELECT t FROM TaskList t JOIN FETCH t.taskItems WHERE t.id = (:id)")
+    @Query("SELECT t FROM TaskList t LEFT JOIN FETCH t.taskItems WHERE t.id = (:id)")
     TaskList getTaskListWithItems(@Param("id") Long id);
+
+    void deleteTaskListById(long id);
 }
