@@ -18,4 +18,8 @@ public class TaskListService {
     public TaskList getSingleTaskList(Long id) {
         return taskListRepository.getTaskListWithItems(id);
     }
+
+    public void addTaskList(TaskList taskList) {
+        taskListRepository.save(taskList);
+    }
 }

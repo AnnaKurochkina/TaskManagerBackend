@@ -23,4 +23,10 @@ public class TaskListController {
     public ResponseEntity<TaskList> getTaskList(@PathVariable long id) {
         return ResponseEntity.status(HttpStatus.OK).body(taskListService.getSingleTaskList(id));
     }
+
+    @PostMapping("/lists")
+    public ResponseEntity<TaskList> createTaskList(@RequestBody TaskList taskList) {
+        taskListService.addTaskList(taskList);
+        return ResponseEntity.status(HttpStatus.CREATED).body(taskList);
+    }
 }

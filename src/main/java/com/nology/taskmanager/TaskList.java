@@ -3,7 +3,9 @@ package com.nology.taskmanager;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class TaskList {
@@ -31,13 +33,16 @@ public class TaskList {
     private Collection<TaskItem> taskItems;
 
     public TaskList() {
+        this("", "");
     }
 
     public TaskList(String name, String color) {
         this.name = name;
+        this.archived = false;
         this.color = color;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
+        this.taskItems = new ArrayList<TaskItem>();
     }
 
     public Long getId() {
