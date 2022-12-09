@@ -16,7 +16,7 @@ public class TaskListService {
         return taskListRepository.findAll();
     }
 
-    public TaskList getSingleTaskList(Long id) {
+    public TaskList getSingleTaskList(long id) {
         return taskListRepository.getTaskListWithItems(id);
     }
 
@@ -41,5 +41,22 @@ public class TaskListService {
         var existing = result.get();
         existing.setName(taskList.getName());
         taskListRepository.save(existing);
+    }
+
+    public void addTaskItem(long id, TaskItem taskItem) {
+        var result = taskListRepository.findById(id);
+
+        if (result.isEmpty()) {
+            throw new TaskListNotFoundException();
+        }
+
+        var existing = result.get();
+        existing.getTaskItems().add(taskItem);
+        taskListRepository.save(existing);
+
+        // We need to assign the newly generated id of the child entity because JPA doesn't do it for us
+        var taskItems = existing.getTaskItems();
+        var newTaskItem = taskItems.get(taskItems.size() - 1);
+        taskItem.setId(newTaskItem.getId());
     }
 }

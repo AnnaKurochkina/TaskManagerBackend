@@ -3,6 +3,7 @@ package com.nology.taskmanager;
 import jakarta.persistence.*;
 
 import java.time.Instant;
+import java.util.stream.Stream;
 
 @Entity
 public class TaskItem {
@@ -29,21 +30,24 @@ public class TaskItem {
     @Column(nullable = true)
     private Instant dueDate;
 
-    @ManyToOne
-    @JoinColumn(name = "task_list_id", referencedColumnName = "id", nullable = false)
-    private TaskList taskList;
-
     public TaskItem() {
+        this("");
     }
 
     public TaskItem(String name) {
         this.name = name;
+        this.archived = false;
+        this.done = false;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
     }
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {

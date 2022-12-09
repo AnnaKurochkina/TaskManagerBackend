@@ -3,9 +3,7 @@ package com.nology.taskmanager;
 import jakarta.persistence.*;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 @Entity
 public class TaskList {
@@ -29,8 +27,9 @@ public class TaskList {
     @Column(nullable = false)
     private Instant updatedAt;
 
-    @OneToMany(mappedBy = "taskList", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Collection<TaskItem> taskItems;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "task_list_id", nullable = false)
+    private List<TaskItem> taskItems;
 
     public TaskList() {
         this("", "");
@@ -42,7 +41,7 @@ public class TaskList {
         this.color = color;
         this.createdAt = Instant.now();
         this.updatedAt = Instant.now();
-        this.taskItems = new ArrayList<TaskItem>();
+        this.taskItems = new ArrayList<>();
     }
 
     public Long getId() {
@@ -88,7 +87,7 @@ public class TaskList {
         return updatedAt;
     }
 
-    public Collection<TaskItem> getTaskItems() {
+    public List<TaskItem> getTaskItems() {
         return this.taskItems;
     }
 }
