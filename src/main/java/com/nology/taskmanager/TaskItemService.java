@@ -27,6 +27,7 @@ public class TaskItemService {
 
         var existing = result.get();
         existing.setName(taskItem.getName());
+        existing.setArchived(taskItem.getArchived());
         taskItemRepository.save(existing);
     }
 }

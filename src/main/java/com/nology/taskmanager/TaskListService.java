@@ -40,6 +40,8 @@ public class TaskListService {
 
         var existing = result.get();
         existing.setName(taskList.getName());
+        existing.setArchived(taskList.getArchived());
+        existing.setColor(taskList.getColor());
         taskListRepository.save(existing);
     }
 
